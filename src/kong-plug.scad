@@ -1,29 +1,25 @@
+include <../lib/knurledFinishLib.scad>
 
 $fn=20;
 
-/* [ Quick Presents ] */
-quick_presents = 0; // [0: Custom Parameters, 1: Kong Large Red, 2: Kong XL Red]
+/**
+    [ Kong Toy Plug ]
+
+    * Note: The JSON file contains parameter sets for different Kong toys.
+
+**/
+
+/* [ Toy Parameter Settings ] */
+
+param_set = "L"; //[::string] "S", "M", "L", "XL"
+core_diameter = 9.5; //[::non-negative float]
+wall_thickness = 11; //[::non-negative float]
+
 
 /* [ Refined Settings ] */
 
-core_diameter = 10.5; //[::non-negative float]
-
-wall_thickness = 11; //[::non-negative float]
-
-handle_radius = core_diameter; //[::non-negative float]
-handle_length = 7; //[::non-negative float]
-
-/*
-cylinder(h=15, r=10);
-translate([0, 0, 15-0.01]) {
-    cylinder(h=11, r=5);
-
-    translate([0, 0, 11-0.01]) {
-        cylinder(h=2, r=6);
-    }
-}
-*/
-kong_plug();
+handle_radius = 10; //[::non-negative float]
+handle_length = 14; //[::non-negative float]
 
 module kong_plug() {
     /**
@@ -34,9 +30,10 @@ module kong_plug() {
         @param handle_radius the radius of the handle, should be larger than the shaft.
     **/
     color("#BE8381") {
-        linear_extrude(handle_length) {
-            circle(r=handle_radius);
-        }
+        // linear_extrude(handle_length) {
+        //     circle(r=handle_radius);
+        // }
+        knurled_cyl(handle_length, handle_radius*2, 5, 5, 1.75, 1, 30);
     }
     /**
         [ PLUG SHAFT ]
@@ -50,12 +47,27 @@ module kong_plug() {
     **/
     core_radius = core_diameter / 2.0;
     color("#81BE83") {
+        difference() {
         translate([0, 0, handle_length]) {
             linear_extrude(wall_thickness) {
                 circle(r=core_radius);
             }
         }
+
+        translate([0, 0, handle_length + wall_thickness - 1]) {
+            linear_extrude(2) {
+                text(param_set, size = 4, halign = "center", valign = "center");
+            }
+        }
+        }
     }
+
+    /**
+        [ PLUG TIP ]
+
+        This is the tip of the plug, it is used to create a seal with the rubber wall.
+        The tip size is based on the shaft radius. It will be slightly larger.
+    **/
     color("#A281BE") {
         translate([0, 0, handle_length + wall_thickness]) {
             rotate_extrude() {
@@ -69,9 +81,14 @@ module kong_plug() {
 
 }
 
-// module shaft(handle_height, thickness, radius) {
-//     total_height = handle_height + thickness;
+kong_plug();
 
-//     cylinder(h=total_height, r=radius);
 
+
+
+
+// linear_extrude(height = 10, center = true, convexity = 10, twist = 100) {
+//     translate([2, 0, 0]) {
+//         square([5, 5], center = true);
+//     }
 // }

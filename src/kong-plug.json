@@ -1,0 +1,17 @@
+{
+    "fileFormatVersion": "1",
+    "parameterSets": {
+        "KongXL-Red": {
+            "$fn": "20",
+            "param_set": "XL",
+            "core_diameter": "10.5",
+            "wall_thickness": "11"
+        },
+        "KongLarge-Red": {
+            "$fn": "20",
+            "param_set": "L",
+            "core_diameter": "9.5",
+            "wall_thickness": "11"
+        }
+    }
+}
