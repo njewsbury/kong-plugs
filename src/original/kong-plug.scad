@@ -1,4 +1,4 @@
-include <../lib/knurledFinishLib.scad>
+include <../../lib/knurledFinishLib.scad>
 
 $fn=20;
 
@@ -76,19 +76,7 @@ module kong_plug() {
                 }
             }
         }
-
     }
-
 }
 
 kong_plug();
-
-
-
-
-
-// linear_extrude(height = 10, center = true, convexity = 10, twist = 100) {
-//     translate([2, 0, 0]) {
-//         square([5, 5], center = true);
-//     }
-// }
